@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Smart Clinic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Fonts -->
+	<!--
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+	-->
+    <!-- CSS Libs -->
+    <link rel="stylesheet" type="text/css" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/animate.css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/checkbox3/dist/checkbox3.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/DataTables/media/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/datatables/media/css/dataTables.bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/select2/dist/css/select2.min.css">
+    <!-- CSS App -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/themes/flat-blue.css">
+	<style>
+	.hidden { visibility: hidden }
+	</style>
+</head>
+
+<body class="flat-blue">
+    <div class="app-container">
+        <div class="row content-container">
+            <nav class="navbar navbar-default navbar-fixed-top navbar-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-expand-toggle">
+                            <i class="fa fa-bars icon"></i>
+                        </button>
+						
+						<ol class="breadcrumb navbar-breadcrumb">
+                            <li>Doctor</li>
+                            <li class="active">Create New Session</li>
+                        </ol>
+						
+                        <button type="button" class="navbar-right-expand-toggle pull-right visible-xs">
+                            <i class="fa fa-th icon"></i>
+                        </button>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+						
+                        <li class="dropdown profile">
+							
+							<a data-target="#" href="#doctorCreateSession" class="dropdown-toggle" data-toggle="dropdown" role="button"
+							   aria-expanded="false">{{usrName}}<span class="caret"></span></a>
+							
+                            <ul class="dropdown-menu animated fadeInDown">
+                                <li class="profile-img">
+									<img src="images/profiles/{{usrName}}.jpg" class="profile-img">
+                                </li>
+                                <li>
+                                    <div class="profile-info">
+										<h4 class="username">{{usrName}}</h4>
+										<p>{{UsrEmail}}</p>
+                                        <div class="btn-group margin-bottom-2x" role="group">
+                                            <button type="button" class="btn btn-default"><i class="fa fa-user"></i>Profile</button>
+                                            <button type="button" class="btn btn-default" ng-click="menuItemClick('/login')"><i class="fa fa-sign-out"></i> Logout</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+							
+                        </li>
+						
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="side-menu sidebar-inverse">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="side-menu-container">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#">
+                                <div class="icon fa fa-paper-plane"></div>
+                                <div class="title">Smart Clinic</div>
+                            </a>
+                            <button type="button" class="navbar-expand-toggle pull-right visible-xs">
+                                <i class="fa fa-times icon"></i>
+                            </button>
+                        </div>
+                        <ul class="nav navbar-nav">
+                            <!--
+							<li>
+                                <a href="#/landing">
+                                    <span class="icon fa fa-tachometer"></span><span class="title">Landing Page</span>
+                                </a>
+                            </li>
+							-->
+							
+                            <li>
+                                <a href="#/login">
+                                    <span class="icon fa fa-thumbs-o-up"></span><span class="title">Login</span>
+                                </a>
+                            </li>
+							
+							<li>
+                                <a href="#/dashboard">
+                                    <span class="icon fa fa-tachometer"></span><span class="title">Smart Clinic Dashboard</span>
+                                </a>
+                            </li>
+							
+							<div ng-if="UsrType==='D'">
+							<li class="panel panel-default dropdown">
+								<a data-toggle="collapse" data-target="#doctorMenu">
+                                    <span class="icon fa fa-desktop"></span><span class="title">Doctor</span>
+                                </a>
+								<div id="doctorMenu" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <ul class="nav navbar-nav">
+											<li><a ng-click="menuItemClick('/listSessions')" style="cursor:pointer">List Sessions</a> </li>
+											<li><a ng-click="menuItemClick('/listPatients')" style="cursor:pointer">List Patients</a> </li>
+											<li><a ng-click="menuItemClick('/diagnosis')" style="cursor:pointer" >Diagnosis</a> </li>
+                                            <li class="active"><a ng-click="menuItemClick('/doctorCreateSession')" style="cursor:pointer">Create New Session</a> </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+							</div>
+							
+							<div ng-if="UsrType==='D' || UsrType==='S'">
+							<li class="panel panel-default dropdown">
+                                <a data-toggle="collapse" data-target="#staffMenu">
+                                    <span class="icon fa fa-slack"></span><span class="title">Staff</span>
+                                </a>
+                                <div id="staffMenu" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul class="nav navbar-nav">
+											<li><a ng-click="menuItemClick('/listPatients')" style="cursor:pointer"
+											       ng-class="(UsrType==='S') ? '' : 'hidden'">List Patients</a> </li>
+											<li><a href="#/newUserRegistration">New Patient Registration</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+							</div>
+							
+							<li class="panel panel-default dropdown">
+                                <a data-toggle="collapse" data-target="#patientMenu">
+                                    <span class="icon fa fa-cubes"></span><span class="title">Patient</span>
+                                </a>
+                                <div id="patientMenu" class="panel-collapse collapse">
+                                    <div class="panel-body">
+										<ul class="nav navbar-nav">
+											<li><a ng-click="menuItemClick('/bookConsultation')" style="cursor:pointer">Book Consultation</a> </li>
+											<li><a ng-click="menuItemClick('/diagnosis')" style="cursor:pointer" 
+												   ng-class="(UsrType==='N') ? '' : 'hidden'">Diagnosis</a>
+											</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            					
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </nav>
+            </div>						
+			
+            <!-- Main Content -->
+            <div class="container-fluid">
+						
+                <div class="side-body">
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="card">
+                                <div class="card-header">									
+                                </div>
+								
+                              <div class="card-body">
+							  
+							    <div ng-show="error" class="alert alert-danger">{{error}}</div>
+								
+								<form name="form" class="form-horizontal" ng-submit="createSession()" ng-init="formLoad()" role="form">
+								
+									<div class="col-xs-12 col-sm-3">
+									<div  class="form-group">
+										<label for="location">Location</label>
+										<select  name="location" id="location" class="form-control" ng-model="selectedLocation"
+											ng-options="location as location.LocName for location in locations" 
+											ng-change="locationChange()" required></select>
+										<span ng-show="form.location.$dirty && form.location.$error.required" class="help-block">Location is required</span>
+									</div>
+									</div>
+									
+									
+									<div class="col-sm-1"></div>
+
+                                    <div class="col-xs-12 col-sm-3">
+                                        <div class="form-group">
+                                        <label for="maxSlotNum">No. of patients</label>
+										<input type="text" name="maxSlotNum" id="maxSlotNum" class="form-control" 
+										       ng-model="selectedMaxSlotNum" required ng-pattern="/^[0-9]{1,2}$/"/>
+											
+										<span ng-show="form.maxSlotNum.$dirty && form.maxSlotNum.$error.required" class="help-block">
+											  No. of patients is required</span>
+										<span ng-show="form.maxSlotNum.$dirty && form.maxSlotNum.$error.pattern" class="help-block">
+											  Not a valid number. Maximum digits permitted is 2</span>
+                                        </div>
+                                    </div>
+									
+                                    <div class="col-xs-12"></div>
+								
+									<div class="col-xs-12 col-sm-3">
+										<div class="form-group" ng-class="{ 'has-error': form.date.$dirty && form.date.$error.required }">
+											<label for="date">Date</label>
+											<input type="text" ui-date name="date" id="date" class="form-control" ng-model="selectedDate" placeholder="Date" required>
+											<span ng-show="form.date.$dirty && form.date.$error.required" class="help-block">Date is required</span>
+										</div>
+									</div>
+									
+									<div class="col-sm-1"></div>
+									
+									<div class="col-xs-12 col-sm-3">
+									<div class="form-group">
+										<label for="startTime">From</label>
+										<div style="display: table;">
+											<div style="display: table-row;">
+												<div style="display: table-cell;">
+												<select class="form-control" ng-model="selStartTime.hrs" 
+												        ng-options="hr for hr in startTimeHrs" required style="width:75px" ></select>
+												</div>
+												<div style="display: table-cell;">
+												<label>Hrs</label>
+												</div>
+												<div style="display: table-cell;">
+												<select  class="form-control" ng-model="selStartTime.mins" ng-options="min for min in startTimeMins" 
+										         required style="width:75px" ></select>
+												</div>
+												<div style="display: table-cell;">
+												<label>Mins</label>
+												</div>  
+												<div style="display: table-cell;">
+												<select  class="form-control" ng-model="selStartTime.amOrPm" 
+												         ng-options="amOrPmStr for amOrPmStr in startTimeAMorPM" required style="width:75px" ></select>
+												</div>
+												<div style="display: table-cell;">
+												<label>AM/PM</label>
+												</div>  
+											</div>
+										</div>
+									</div>
+									</div>
+									
+									<div class="col-sm-1"></div>
+									
+									<div class="col-xs-12 col-sm-3">
+									<div class="form-group">
+										<label for="endTime">To</label>
+										<div style="display: table;">
+											<div style="display: table-row;">
+												<div style="display: table-cell;">
+												<select class="form-control" ng-model="selEndTime.hrs" 
+												        ng-options="hr for hr in endTimeHrs" required style="width:75px"></select>
+												</div>
+												<div style="display: table-cell;">
+												<label>Hrs</label>
+												</div>
+												<div style="display: table-cell;">
+												<select  class="form-control" ng-model="selEndTime.mins" ng-options="min for min in endTimeMins" 
+										         required style="width:75px" ></select>
+												</div>
+												<div style="display: table-cell;">
+												<label>Mins</label>
+												</div>  
+												<div style="display: table-cell;">
+												<select  class="form-control" ng-model="selEndTime.amOrPm" 
+												         ng-options="amOrPmStr for amOrPmStr in endTimeAMorPM" required style="width:75px" ></select>
+												</div>
+												<div style="display: table-cell;">
+												<label>AM/PM</label>
+												</div>  
+											</div>
+										</div>
+									</div>
+									</div>
+                                    <div class="col-xs-12"></div>
+									
+									<div class="col-xs-12">
+									<div class="form-group">
+										<button type="submit"  ng-disabled="form.$invalid || dataLoading || disableSubmit" class="btn btn-danger">Create Session</button>
+										<img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+										
+										<button type="button" ng-click="reloadRouteAndResetForm()" class="btn btn-primary">Reset</button>
+										<span ng-show="cue">{{cue}}</span>
+									</div>
+									</div>
+									
+								</form>
+							    
+                              </div>
+                            </div>
+                        </div>
+                    </div>					
+                </div>
+            </div>
+			
+        </div>
+		
+	</div>
+	<footer class="app-footer">
+		<div class="wrapper">
+			
+		</div>
+	</footer>
+	
+	<script type="text/javascript" src="../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+            
+    <script type="text/javascript" src="../../js/app.js"></script>
+		
+</body>
+
+</html>
+

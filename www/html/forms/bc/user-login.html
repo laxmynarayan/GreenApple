@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Smart Clinic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- CSS Libs -->
+    <link rel="stylesheet" type="text/css" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/animate.css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/checkbox3/dist/checkbox3.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/DataTables/media/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/datatables/media/css/dataTables.bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/select2/dist/css/select2.min.css">
+    <!-- CSS App -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/themes/flat-blue.css">
+	
+	<style>
+	
+	.login {
+		background: lightgrey;
+		width:300px;
+		margin:auto;
+		border:1px #CCC solid;
+		border-radius: 6px;
+		padding:10px;
+	}
+	
+	.login input {
+		width:290px;
+		padding:5px;
+		margin:5px auto
+	}
+	
+	.login input[type="radio"] {
+		
+		background-color: #ddd;
+		width: 40px;
+		height: 15px;
+		padding:5px;
+		margin:5px auto;
+	}
+	
+	.login label {
+		margin:0px 10px
+	}
+	
+	.login span{
+		position: relative;
+		left: 5px;
+		margin: 5px 5px;
+	}
+	
+	</style>
+
+</head>
+
+<body class="flat-blue">
+    <div class="app-container">
+        <div class="row content-container">
+            <nav class="navbar navbar-default navbar-fixed-top navbar-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-expand-toggle">
+                            <i class="fa fa-bars icon"></i>
+                        </button>
+                        <ol class="breadcrumb navbar-breadcrumb">
+                            <li class="active">Smart Clinic Login - Fathima Hospital</li>
+                        </ol>
+                        <button type="button" class="navbar-right-expand-toggle pull-right visible-xs">
+                            <i class="fa fa-th icon"></i>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+			
+            <div class="side-menu sidebar-inverse">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="side-menu-container">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#">
+                                <div class="icon fa fa-paper-plane"></div>
+                                <div class="title">Smart Clinic</div>
+                            </a>
+                            <button type="button" class="navbar-expand-toggle pull-right visible-xs">
+                                <i class="fa fa-times icon"></i>
+                            </button>
+                        </div>
+                        <ul class="nav navbar-nav">
+							<!--
+							<li>
+                                <a href="#/landing">
+                                    <span class="icon fa fa-tachometer"></span><span class="title">Landing Page</span>
+                                </a>
+                            </li>
+							-->
+							
+							<li class="active">
+                                <a href="#/login">
+                                    <span class="icon fa fa-thumbs-o-up"></span><span class="title">Login</span>
+                                </a>
+                            </li>
+							
+							<!--
+							<li>
+								<a href="#/newUserRegistration">
+                                    <span class="icon fa fa-thumbs-o-up"></span><span class="title">New Patient Registration</span>
+                                </a>
+                            </li>
+							-->
+							
+                        </ul>
+                    </div>
+                    
+                </nav>
+            </div>				
+			
+            <!-- Main Content -->
+            <div class="container-fluid">
+                <div class="side-body">
+
+                            <div class="card">
+                                <div class="card-header">									
+                                </div>
+								
+                                <div class="card-body">	
+									
+									<div ng-show="error" class="alert alert-danger">{{error}}</div>
+									
+									<form name="form" class="form-horizontal" ng-submit="login()" role="form">
+
+										<div class="login">
+										<div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+											<label for="username">User ID</label>
+											<input type="text" name="username" id="username" class="form-control" ng-model="username" required />
+											<span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">UserName is required</span>
+											
+										</div>
+										
+										<div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+											<label for="password">Password</label>
+											<i class="fa fa-lock"></i>
+											<input type="password" name="password" id="password" class="form-control" ng-model="password" required />
+											<span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+										</div>
+										
+										<!--
+										<div class="form-group" ng-class="{ 'has-error': form.doctorID.$dirty && form.doctorID.$error.required }">
+											<label for="doctorID">Doctor ID</label>
+											<input type="text" name="doctorID"  id="doctorID" class="form-control" ng-model="doctorID" 
+											       required ng-pattern="/^(\d)+$/"/>
+											<span ng-show="form.doctorID.$dirty && form.doctorID.$error.required" class="help-block">Doctor ID is required</span>
+											<span ng-show="form.doctorID.$dirty && form.doctorID.$error.pattern" class="help-block">
+											      Not a valid Doctor ID</span>
+										</div>
+										-->
+									
+										<div class="form-group">
+											<label for="usrType">User Type</label><br>
+											<input type="radio" id="usrType" name="usrType" ng-model="usrType" value="D">Doctor<br>
+											<!--
+											<input type="radio" id="usrType" name="usrType" ng-model="usrType" value="S">Staff<br>
+											
+											<input type="radio" id="usrType" name="usrType" ng-model="usrType" value="N">Patient
+                                            -->
+										</div>
+										
+										<div class="form-actions">
+											<button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-default">Login</button>
+								
+											<img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+										</div>
+
+										</div>
+									</form>
+									
+                                </div>
+                            </div>
+                </div>
+            </div>
+			
+        </div>
+	</div>
+	
+	<footer class="app-footer">
+		<div class="wrapper">
+			
+		</div>
+	</footer>
+	
+	<script type="text/javascript" src="../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/app.js"></script>
+	
+</body>
+
+</html>

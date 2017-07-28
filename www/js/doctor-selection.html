@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Smart Clinic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS Libs -->
+    <link rel="stylesheet" type="text/css" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/animate.css/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/checkbox3/dist/checkbox3.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/DataTables/media/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/datatables/media/css/dataTables.bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../bower_components/select2/dist/css/select2.min.css">
+    <!-- CSS App -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/themes/flat-blue.css">
+
+</head>
+
+<body class="flat-blue">
+    <div class="app-container">
+        <div class="row content-container">
+            <nav class="navbar navbar-default navbar-fixed-top navbar-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-expand-toggle">
+                            <i class="fa fa-bars icon"></i>
+                        </button>
+                        <ol class="breadcrumb navbar-breadcrumb">
+                            <li>Patient</li>
+                            <li class="active">Doctor Selection</li>
+                        </ol>
+                        <button type="button" class="navbar-right-expand-toggle pull-right visible-xs">
+                            <i class="fa fa-th icon"></i>
+                        </button>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+						<li class="dropdown profile">
+							
+							<a data-target="#" href="#doctorSelection" class="dropdown-toggle" data-toggle="dropdown" role="button"
+							   aria-expanded="false">{{usrName}}<span class="caret"></span></a>
+							
+                            <ul class="dropdown-menu animated fadeInDown">
+                                <li class="profile-img">
+									<img src="images/profiles/{{usrName}}.jpg" class="profile-img">
+                                </li>
+                                <li>
+                                    <div class="profile-info">
+										<h4 class="username">{{usrName}}</h4>
+										<p>{{UsrEmail}}</p>
+										<p>{{DocName}}</p>
+                                        <div class="btn-group margin-bottom-2x" role="group">
+                                            <button type="button" class="btn btn-default"><i class="fa fa-user"></i>Profile</button>
+                                            <button type="button" class="btn btn-default" ng-click="menuItemClick('/login')"><i class="fa fa-sign-out"></i> Logout</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+							
+                        </li>
+						
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="side-menu sidebar-inverse">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="side-menu-container">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#">
+                                <div class="icon fa fa-paper-plane"></div>
+                                <div class="title">Smart Clinic</div>
+                            </a>
+                            <button type="button" class="navbar-expand-toggle pull-right visible-xs">
+                                <i class="fa fa-times icon"></i>
+                            </button>
+                        </div>
+                        <ul class="nav navbar-nav">
+							
+                            <li>
+                                <a href="#/login">
+                                    <span class="icon fa fa-thumbs-o-up"></span><span class="title">Login</span>
+                                </a>
+                            </li>
+
+							<li>
+                                <a href="#/dashboard">
+                                    <span class="icon fa fa-tachometer"></span><span class="title">Smart Clinic Dashboard</span>
+                                </a>
+                            </li>
+							
+							<div ng-if="UsrType==='D'">
+							<li class="panel panel-default dropdown">
+								<a data-toggle="collapse" data-target="#doctorMenu">
+                                    <span class="icon fa fa-desktop"></span><span class="title">Doctor</span>
+                                </a>
+								<div id="doctorMenu" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul class="nav navbar-nav">
+											<li ><a ng-click="menuItemClick('/listSessions')" style="cursor:pointer">List Sessions</a> </li>
+											<li><a ng-click="menuItemClick('/listPatients')" style="cursor:pointer">List Patients</a> </li>
+											<li><a ng-click="menuItemClick('/diagnosis')" style="cursor:pointer">Diagnosis</a> </li>
+                                            <li><a ng-click="menuItemClick('/doctorCreateSession')" style="cursor:pointer">Create New Session</a> </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+							</div>
+							
+							<div ng-if="UsrType==='D' || UsrType==='S'">
+                            <li class="panel panel-default dropdown">
+                                <a data-toggle="collapse" data-target="#staffMenu">
+                                    <span class="icon fa fa-slack"></span><span class="title">Staff</span>
+                                </a>
+                                <div id="staffMenu" class="panel-collapse collapse">
+                                    <div class="panel-body">
+										<ul class="nav navbar-nav">
+											<li><a ng-click="menuItemClick('/listPatients')" style="cursor:pointer"
+											       ng-class="(UsrType==='S') ? '' : 'hidden'">List Patients</a> </li>
+											<li><a ng-click="menuItemClick('/newUserRegistration')" style="cursor:pointer">
+											       New Patient Registration</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+							</div>
+
+							<li class="panel panel-default dropdown">
+                                <a data-toggle="collapse" data-target="#patientMenu">
+                                    <span class="icon fa fa-cubes"></span><span class="title">Patient</span>
+                                </a>
+                                <div id="patientMenu" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <ul class="nav navbar-nav">
+											<li class="active">
+											<a ng-click="menuItemClick('/doctorSelection')" style="cursor:pointer"
+											   ng-class="(UsrType==='N') ? '' : 'hidden'">
+											    Doctor Selection
+											</a>
+											</li>
+											
+											<li>
+											<a ng-click="menuItemClick('/bookConsultation')" style="cursor:pointer">
+											    Book Consultation
+											</a>
+											</li>
+											
+											<li><a ng-click="menuItemClick('/diagnosis')" style="cursor:pointer" 
+												   ng-class="(UsrType==='N') ? '' : 'hidden'">Diagnosis</a>
+											</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+							
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </nav>
+            </div>				
+			
+			<!-- Main Content -->
+            <div class="container-fluid">
+						
+                <div class="side-body">
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="card">
+                                <div class="card-header">									
+                                </div>
+								
+                              <div class="card-body">
+							  
+							    <div ng-show="error" class="alert alert-danger">{{error}}</div>
+																								
+								<form name="form" ng-init="formLoad()" role="form">
+												
+									<label for="selectedDoctor">Doctor</label>
+									
+									<select size="3" ng-model="selectedDoctor" ng-options="(doctor.DocName)
+											for doctor in userDoctorList" style="width:200px"
+											ng-change="docChange()">
+									</select>
+	
+								</form>
+							    
+							  </div>
+                            </div>
+                        </div>
+                    </div>					
+                </div>
+            </div>
+            
+        </div>
+	</div>
+	
+	<footer class="app-footer">
+		<div class="wrapper">
+		</div>
+	</footer>
+	
+	<script type="text/javascript" src="../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+            
+    <script type="text/javascript" src="../../js/app.js"></script>
+
+        
+</body>
+
+
+</html>
