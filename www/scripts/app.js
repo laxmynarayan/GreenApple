@@ -105,7 +105,7 @@ angular.module('SmartClinicApp', [
         $rootScope.globals = $cookieStore.get('globals') || {};
         if ($rootScope.globals.currentUser) {
             // jshint ignore:line
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
+            //$http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
         }
  
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
