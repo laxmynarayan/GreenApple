@@ -32,6 +32,5 @@ $(function() {
 $(function() {
   return $(".side-menu .nav .dropdown").on('show.bs.collapse', function() {
     return $(".side-menu .nav .dropdown .collapse").collapse('hide');
-  });*/
-
-});
+  });
+});*/
