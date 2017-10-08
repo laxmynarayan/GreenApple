@@ -16,7 +16,7 @@ angular.module('NewUserRegistration')
         var service = {};
 		//var BaseAPIUrl = "";
         //var BaseAPIUrl = "http://localhost:8080";
-        var BaseAPIUrl = "http://ec2-13-126-5-195.ap-south-1.compute.amazonaws.com/SmartClinicWebApi";
+        var BaseAPIUrl = "http://ec2-18-221-0-251.us-east-2.compute.amazonaws.com:1809";
 
 
 
